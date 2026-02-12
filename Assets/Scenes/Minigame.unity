@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 3
+  projectilePrefab: {fileID: 4546296835484432497, guid: 0edbfb01d1dde45a789d6603d5caa06c, type: 3}
+  projectileForce: 10
 --- !u!50 &393685525
 Rigidbody2D:
   serializedVersion: 5
