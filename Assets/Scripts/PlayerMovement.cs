@@ -6,7 +6,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public GameObject projectilePrefab;
     public float projectileForce = 10f;
-    public AudioClip Pew;
+    public AudioClip pew;
+    public AudioClip hit;
     private AudioSource audioSource;
 
     void Start()
@@ -38,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
         {
             newPos.x += speed * Time.deltaTime;
         }
-
         
         // arrow key movement
         if (Keyboard.current.upArrowKey.isPressed)
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         // Spacebar action
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
 
-            audioSource.PlayOneShot(Pew);
+            audioSource.PlayOneShot(pew);
 
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 
@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         // Mouse click action 
                 if (Mouse.current.leftButton.wasPressedThisFrame) {
 
-            audioSource.PlayOneShot(Pew);
+            audioSource.PlayOneShot(pew);
 
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 
@@ -102,6 +102,17 @@ public class PlayerMovement : MonoBehaviour
             Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(playerCollider, projectileCollider);
         }
+    }
 
+    // plays sound when enemy hits player
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (hit != null)
+            {
+                audioSource.PlayOneShot(hit);
+            }
+        }
     }
 }
