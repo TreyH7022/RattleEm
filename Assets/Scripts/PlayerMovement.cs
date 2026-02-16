@@ -6,16 +6,19 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public GameObject projectilePrefab;
     public float projectileForce = 10f;
+    public AudioClip Pew;
+    private AudioSource audioSource;
 
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         Vector3 newPos = transform.position;
 
+        // WASD movement
         if (Keyboard.current.wKey.isPressed)
         {
             newPos.y += speed * Time.deltaTime;
@@ -36,9 +39,33 @@ public class PlayerMovement : MonoBehaviour
             newPos.x += speed * Time.deltaTime;
         }
 
+        /*
+        // arrow key movement
+        if (Keyboard.current.wKey.isPressed)
+        {
+            newPos.y += speed * Time.deltaTime;
+        }
+
+        if (Keyboard.current.sKey.isPressed)
+        {
+            newPos.y -= speed * Time.deltaTime;
+        }
+
+        if (Keyboard.current.aKey.isPressed)
+        {
+            newPos.x -= speed * Time.deltaTime;
+        }
+
+        if (Keyboard.current.dKey.isPressed)
+        {
+            newPos.x += speed * Time.deltaTime;
+        }
+*/
         transform.position = newPos;
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+
+            audioSource.PlayOneShot(Pew);
 
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 
