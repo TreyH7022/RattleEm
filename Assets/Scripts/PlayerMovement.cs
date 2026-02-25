@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip hit;
     public GameObject hitEffectPrefab;
     public GameObject gameOver;
-    public float gameOverDelay = 3f;
+    public float gameOverDelay = 1f;
 
     private AudioSource audioSource;
     private bool isDead = false;
