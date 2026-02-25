@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,7 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float projectileForce = 10f;
     public AudioClip pew;
     public AudioClip hit;
+    public GameObject hitEffectPrefab;
+    public GameObject gameOver;
+    public float gameOverDelay = 3f;
+
     private AudioSource audioSource;
+    private bool isDead = false;
 
     void Start()
     {
@@ -107,12 +113,28 @@ public class PlayerMovement : MonoBehaviour
     // plays sound when enemy hits player
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && !isDead)
         {
+            isDead = true;
+
             if (hit != null)
             {
                 audioSource.PlayOneShot(hit);
             }
+
+            Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+
+            StartCoroutine(GameOverAfterDelay());
+
         }
+    }
+
+    IEnumerator GameOverAfterDelay()
+    {
+        yield return new WaitForSeconds(gameOverDelay);
+
+        gameOver.SetActive(true);
+
+        Time.timeScale = 0f; 
     }
 }
