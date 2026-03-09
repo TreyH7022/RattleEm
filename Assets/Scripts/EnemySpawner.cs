@@ -19,6 +19,10 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy();
             timer = spawnInterval;
         }
+
+        // spawns faster over time
+        spawnInterval -= 0.01f;
+        spawnInterval = Mathf.Clamp(spawnInterval, 0.5f, 2f);
     }
 
     void SpawnEnemy()

@@ -2,24 +2,25 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    public float minSpeed = 2f;
+    public float maxSpeed = 5f;
+    private float moveSpeed;
+
     public Transform player;
     private Rigidbody2D rb;
     public GameObject enemyPrefab;
-    public float spawnInterval = 2f;
     public AudioClip hit;
     public GameObject hitEffect;
 
     private AudioSource audioSource;
-    private float spawnTimer;
     private Vector2 movement;
     private bool isDead = false;
 
     void Start()
     {
+        moveSpeed = Random.Range(minSpeed, maxSpeed);
+        
         rb = GetComponent<Rigidbody2D>();
-
-        spawnTimer = spawnInterval;
 
         // Auto-find the player if not assigned
         if (player == null)
