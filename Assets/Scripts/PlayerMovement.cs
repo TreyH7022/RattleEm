@@ -12,11 +12,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject hitEffectPrefab;
     public GameObject gameOver;
     public float gameOverDelay = 1f;
+    public GameManager gameManager;
 
     private AudioSource audioSource;
     private bool isDead = false;
     private Animator animator;
     private Vector2 movement;
+    private bool facingRight = true;
 
     void Start()
     {
@@ -37,6 +39,16 @@ public class PlayerMovement : MonoBehaviour
 
         // Run animation
         animator.SetFloat("Speed", movement.magnitude);
+
+        // Flip sprite based on horizontal movement
+        if (movement.x > 0 && !facingRight)
+        {
+            Flip();
+        }
+        else if (movement.x < 0 && facingRight)
+        {
+            Flip();
+        }
  
         // Spacebar action
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
@@ -85,6 +97,14 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Movement: " + movement);
     }
 
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1; // flip horizontally
+        transform.localScale = scale;
+    }
+
     // plays sound when enemy hits player
     public void OnCollisionEnter2D(Collision2D other)
     {
@@ -93,14 +113,16 @@ public class PlayerMovement : MonoBehaviour
             isDead = true;
 
             if (hit != null)
-            {
                 audioSource.PlayOneShot(hit);
+
+            if (hitEffectPrefab != null)
+                Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+
+            gameObject.SetActive(false);
+
+            if (gameManager != null) {
+                gameManager.PlayerDied();
             }
-
-            Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-
-            StartCoroutine(GameOverAfterDelay());
-
         }
     }
 

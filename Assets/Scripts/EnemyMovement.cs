@@ -15,6 +15,8 @@ public class EnemyFollow : MonoBehaviour
     private AudioSource audioSource;
     private Vector2 movement;
     private bool isDead = false;
+    private bool facingRight = true;
+    private Animator animator;
 
     void Start()
     {
@@ -29,6 +31,8 @@ public class EnemyFollow : MonoBehaviour
         }
 
         audioSource = GetComponent<AudioSource>();
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -41,6 +45,24 @@ public class EnemyFollow : MonoBehaviour
         // Normalize so speed is consistent
         movement = direction.normalized;
 
+        // Flip the enemy sprite
+        FlipEnemy(direction.x);
+    }
+
+    void FlipEnemy(float horizontalDirection)
+    {
+        if (horizontalDirection > 0 && !facingRight)
+            Flip();
+        else if (horizontalDirection < 0 && facingRight)
+            Flip();
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1; // flip horizontally
+        transform.localScale = scale;
     }
 
     void FixedUpdate()
