@@ -15,60 +15,29 @@ public class PlayerMovement : MonoBehaviour
 
     private AudioSource audioSource;
     private bool isDead = false;
+    private Animator animator;
+    private Vector2 movement;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        // Move the player using the Input System movement vector
         Vector3 newPos = transform.position;
 
-        // WASD movement
-        if (Keyboard.current.wKey.isPressed)
-        {
-            newPos.y += speed * Time.deltaTime;
-        }
-
-        if (Keyboard.current.sKey.isPressed)
-        {
-            newPos.y -= speed * Time.deltaTime;
-        }
-
-        if (Keyboard.current.aKey.isPressed)
-        {
-            newPos.x -= speed * Time.deltaTime;
-        }
-
-        if (Keyboard.current.dKey.isPressed)
-        {
-            newPos.x += speed * Time.deltaTime;
-        }
-        
-        // arrow key movement
-        if (Keyboard.current.upArrowKey.isPressed)
-        {
-            newPos.y += speed * Time.deltaTime;
-        }
-
-        if (Keyboard.current.downArrowKey.isPressed)
-        {
-            newPos.y -= speed * Time.deltaTime;
-        }
-
-        if (Keyboard.current.leftArrowKey.isPressed)
-        {
-            newPos.x -= speed * Time.deltaTime;
-        }
-
-        if (Keyboard.current.rightArrowKey.isPressed)
-        {
-            newPos.x += speed * Time.deltaTime;
-        }
+        newPos.x += movement.x * speed * Time.deltaTime;
+        newPos.y += movement.y * speed * Time.deltaTime;
 
         transform.position = newPos;
 
+        // Run animation
+        animator.SetFloat("Speed", movement.magnitude);
+ 
         // Spacebar action
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
 
@@ -108,6 +77,12 @@ public class PlayerMovement : MonoBehaviour
             Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(playerCollider, projectileCollider);
         }
+    }
+
+    public void OnMove(InputValue value)
+    {
+        movement = value.Get<Vector2>();
+        Debug.Log("Movement: " + movement);
     }
 
     // plays sound when enemy hits player
