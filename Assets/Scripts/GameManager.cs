@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0f;
-        startMenu.SetActive(true);
-        if (gameOverScreen != null) gameOverScreen.SetActive(false);
+         startMenu.SetActive(true);
+         if (gameOverScreen != null) gameOverScreen.SetActive(false);
     }
 
     public void StartGame()
@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(gameOverDelay);
 
-        if (gameOverScreen != null)
+        if (gameOverScreen != null) 
             gameOverScreen.SetActive(true);
 
-        Time.timeScale = 0f;
+        Time.timeScale = 0f;  
     }
 }

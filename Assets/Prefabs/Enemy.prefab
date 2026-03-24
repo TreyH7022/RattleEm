@@ -161,7 +161,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.09375, y: 1.03125}
+    oldSize: {x: 1.25, y: 1.1785715}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922d997618e9148bfa980a48c536d0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow
-  minSpeed: 2
-  maxSpeed: 5
+  minSpeed: 1
+  maxSpeed: 3
   player: {fileID: 0}
   enemyPrefab: {fileID: 0}
   hit: {fileID: 8300000, guid: 97436e1ce2ebf4da88f176155304b1e4, type: 3}
