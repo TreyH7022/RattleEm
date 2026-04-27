@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("UI Panels")]
-    public GameObject startMenu;
     public GameObject gameOverScreen;
 
     [Header("Settings")]
@@ -12,15 +12,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 0f;
-         startMenu.SetActive(true);
          if (gameOverScreen != null) gameOverScreen.SetActive(false);
     }
 
-    public void StartGame()
+    public void RestartGame()
     {
-        startMenu.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void PlayerDied()
@@ -30,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowGameOver()
     {
-        yield return new WaitForSeconds(gameOverDelay);
+        yield return new WaitForSecondsRealtime(gameOverDelay);
 
         if (gameOverScreen != null) 
             gameOverScreen.SetActive(true);

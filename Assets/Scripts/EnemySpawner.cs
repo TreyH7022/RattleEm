@@ -12,6 +12,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        if (player == null) return;
+
         timer -= Time.deltaTime;
 
         if (timer <= 0f)
@@ -27,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+        if (player == null) return;
+        
         // Random direction
         Vector2 direction = Random.insideUnitCircle.normalized;
 
