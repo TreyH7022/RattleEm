@@ -120,8 +120,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isDead = true;
 
-            if (hit != null)
-                audioSource.PlayOneShot(hit);
+            AudioSource.PlayClipAtPoint(hit, transform.position);
 
             if (hitEffectPrefab != null)
                 Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
