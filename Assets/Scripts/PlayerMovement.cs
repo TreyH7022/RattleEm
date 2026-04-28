@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject gameOver;
     public float gameOverDelay = 1f;
     public GameManager gameManager;
+    public bool clampToBounds = true;
+    public Vector2 minBounds;
+    public Vector2 maxBounds;
 
     private AudioSource audioSource;
     private bool isDead = false;
@@ -35,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
         newPos.x += movement.x * speed * Time.deltaTime;
         newPos.y += movement.y * speed * Time.deltaTime;
 
+        if (clampToBounds) 
+        {
+            newPos.x = Mathf.Clamp(newPos.x, minBounds.x, maxBounds.x);
+            newPos.y = Mathf.Clamp(newPos.y, minBounds.y, maxBounds.y);
+        }
         transform.position = newPos;
 
         // Run animation

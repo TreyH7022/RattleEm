@@ -75,6 +75,11 @@ public class EnemyFollow : MonoBehaviour
 
         isDead = true;
 
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.AddScore(5);
+        }
+
         if (hit != null && audioSource != null) {
             audioSource.PlayOneShot(hit);
         }
@@ -85,5 +90,4 @@ public class EnemyFollow : MonoBehaviour
 
         Destroy(gameObject, 0.1f);
     }
-
 }

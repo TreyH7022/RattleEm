@@ -4,18 +4,13 @@ public class ProjectileBehavior : MonoBehaviour
 {
     public float speed = 10f;
     public GameObject enemyHit;
+    public float lifetime = 3f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
+        Destroy(gameObject, lifetime);
     }
 
     void OnCollisionEnter2D(Collision2D other)
